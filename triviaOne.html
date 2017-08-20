@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<!-- JQuery -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <style type="text/css">
+  body {
+  	background-image: url("./assets/background.jpg"); 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  }
+	/*input all of the styling including url*/
+	h1  {
+		text-align: center;
+		font-size: 40px;
+		font-family: arial bold;
+	}
+	.middle-box {
+		vertical-align: middle;
+		text-align: center;
+		background: grey;
+		border-color: #000000;
+		border-width: 1px;
+		border-style: solid;
+		margin-top: 25%;
+		margin-bottom: 25%;
+		
+	}
+	.questionOne, 
+	.questionTwo,
+	.questionThree,
+	.questionFour {
+		font-size: 20px;
+
+	}
+   </style>
+	
+	
+	
+</head>
+<body>
+	<div class="middle-box">
+		<h1>Totally Trivial Trivia!</h1>
+		<button class="btn btn-default btn lg-vis button" id="start"><span class="glyphicon glyphicon-comment"></span>Start</button>
+
+		<div style="display: none;" id="hiddenText">
+		<div id="timeRemaining">Time Remaining:</div>
+		
+		<div class="questionOne">What is my favorite animal?</div>
+		<input type="radio" name="animalType" value="CORRECT" >Dolphin
+		<input type="radio" name="animalType" value="WRONG" >Puppy 
+		<input type="radio" name="animalType" value="WRONG" >Horse
+		<input type="radio" name="animalType" value="WRONG" >Panther
+		<div id="answerOne"></div>
+		<div class="questionTwo">What is my favorite food?</div>
+		<input type="radio" name="FoodType" value="WRONG" >Pad Thai
+		<input type="radio" name="FoodType" value="CORRECT" >Pizza
+		<input type="radio" name="FoodType" value="WRONG" >Pasta
+		<input type="radio" name="FoodType" value="WRONG" >Mangos
+		<div id="answerTwo"></div>
+		<div class="questionThree">What is my favorite sport?</div>
+		<input type="radio" name="Sport" value="WRONG" >Softball
+		<input type="radio" name="Sport" value="WRONG" >Tennis
+		<input type="radio" name="Sport" value="CORRECT" >Rockclimbing
+		<input type="radio" name="Sport" value="WRONG" >Surfing
+		<div id="answerThree"></div>
+		<div class="questionFour">What is my favorite time of day?</div>
+		<input type="radio" name="Time" value="WRONG" >Mid-day
+		<input type="radio" name="Time" value="WRONG" >Morning
+		<input type="radio" name="Time" value="CORRECT" >Evening
+		<input type="radio" name="Time" value="WRONG" >Always
+		<div id="answerFour"></div>
+		</div>
+<div style="display: none;" id="hiddenTextTwo">
+		<div id="Complete">All Done!</div>
+		<div id="correctAnswers">Correct answers:</div>
+		<div id="incorrectAnswers">Incorrect Answers</div>
+		<div id="unansweredQuestions">Unanswered Questions</div>
+		<button class="btn btn-default btn lg-vis button" id="PlayAgain"><span class="glyphicon glyphicon-comment"></span>Play Again</button>
+</div>
+	</div>
+
+	<script type="text/javascript">
+		var correctCount =0;
+		var incorrectCount =0;
+		var incompleteCount =0;
+		var number = 30; 
+		var intervalId;
+
+		$(document).ready(function() {
+
+			$("#PlayAgain").on("click", function() {
+				$(this).hide();
+				$("#hiddenTextTwo").hide();
+				$("#start").show()
+				$('input[name="FoodType"]').attr('checked',false);
+				$('input[name="Sport"]').attr('checked',false);
+				$('input[name="animalType"]').attr('checked',false);
+				$('input[name="Time"]').attr('checked',false);
+
+				incompleteCount =0;
+				incorrectCount =0;
+				correctCount =0;
+				number =30;
+			});
+		
+			function run () {
+				intervalId	=setInterval(decrement, 1000);
+			}
+			function decrement () {
+				number--;
+				$("#timeRemaining	").html("Time Remaining:" + " " + number);
+				if (number === 0) {
+					stop();
+				}
+
+
+			}
+			function stop () {
+				clearInterval(intervalId);
+				$("#hiddenText").hide();
+				$("#hiddenTextTwo").show();
+				//
+
+				//food type
+				if($('input[name=FoodType]:checked').val() ==="CORRECT") {
+				console.log("rightanswer");
+				correctCount++;
+				console.log(correctCount);
+			} else if ($('input[name=FoodType]:checked').val() ==="WRONG") {
+			console.log("wronganswer");
+			incorrectCount++;
+			console.log(incorrectCount);
+			}
+			else {
+				console.log("you didn't choose an answer");
+				incompleteCount++;
+			}
+			//sport
+			if($('input[name=Sport]:checked').val() ==="CORRECT") {
+				console.log("rightanswer");
+				correctCount++;
+				console.log("correctCount" + correctCount);
+			} else if ($('input[name=Sport]:checked').val() ==="WRONG") {
+			console.log("wronganswer");
+			incorrectCount++;
+			console.log(incorrectCount);
+			}
+			else {
+				console.log("you didn't choose an answer");
+				incompleteCount++;
+				console.log("incomplete Count" + incompleteCount);
+			}
+			//animal type 
+			if($('input[name=animalType]:checked').val() ==="CORRECT") {
+				console.log("rightanswer");
+				correctCount++;
+				console.log(correctCount);
+			} else if ($('input[name=animalType]:checked').val() ==="WRONG") {
+			console.log("wronganswer");
+			incorrectCount++;
+			console.log(incorrectCount);
+			}
+			else {
+				console.log("you didn't choose an answer");
+				incompleteCount++;
+			}
+ 			//Time
+ 			if($('input[name=Time]:checked').val() ==="CORRECT") {
+				console.log("rightanswer");
+				correctCount++;
+				console.log(correctCount);
+			} else if ($('input[name=Time]:checked').val() ==="WRONG") {
+			console.log("wronganswer");
+			incorrectCount++;
+			console.log(incorrectCount);
+			}
+			else {
+				console.log("you didn't choose an answer");
+				incompleteCount++;
+			}
+			$("#correctAnswers").text("Correct answers:" +" " + correctCount);
+			$("#incorrectAnswers").text("Incorrect Answers:" + " "+ incorrectCount);
+			$("#unansweredQuestions").text("Unanswerd questions:" + " " +incompleteCount);
+			}
+
+			$("#start").click(function() {
+				$(this).hide();
+				$("#hiddenText").show()
+				run ();
+				decrement ();
+			});
+
+			// if the time runs out then run these functions
+
+		// first question - need to figure out how to get this at the end after the reset and appear of the scores so the useer can choose
+		
+		
+			//div's are hidden at the start refer to captain planet 
+			//on click of the start button- questions appear start button disappers - hidden && time remaining starts timer and appears
+
+			//if time remaining  is 0 stop game 
+			//if answer is correct choice add point to correct count , else if incorrect ++ , else incomplete ++ 
+			//
+
+				
+		});
+	</script>
+</body>
+</html>
